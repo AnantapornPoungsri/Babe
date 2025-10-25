@@ -1,4 +1,4 @@
-<!DOCTYPE DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -246,30 +246,53 @@
             justify-content: center;
             position: relative;
             padding: 20px;
-            overflow: hidden;
         }
 
         .stories-wrapper {
-            display: flex;
-            width: 500%;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: transform;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 600px;
+            perspective: 1000px;
         }
 
         .story-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: white;
             border-radius: 30px;
             padding: 40px;
-            max-width: 500px;
-            width: 20%;
-            min-width: 20%;
             box-shadow: 0 20px 60px rgba(255, 105, 180, 0.2);
             text-align: center;
-            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: rotateY(-90deg) scale(0.8);
+            backface-visibility: hidden;
+        }
+
+        .story-card.active {
+            opacity: 1;
+            transform: rotateY(0deg) scale(1);
+            z-index: 10;
+        }
+
+        .story-card.prev {
+            opacity: 0.3;
+            transform: rotateY(45deg) scale(0.9) translateX(-50px);
+            z-index: 5;
+        }
+
+        .story-card.next {
+            opacity: 0.3;
+            transform: rotateY(-45deg) scale(0.9) translateX(50px);
+            z-index: 5;
         }
 
         .story-photo {
@@ -695,6 +718,38 @@
             box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
         }
 
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #ff69b4;
+            border: 3px solid #ffc3e1;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .music-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+            border-color: #ff69b4;
+        }
+
+        .music-control.playing {
+            background: linear-gradient(135deg, #ff69b4, #ff9ec7);
+            color: white;
+            border-color: #ff69b4;
+        }
+
         @media (max-width: 768px) {
             .intro-text {
                 font-size: 32px;
@@ -758,10 +813,20 @@
             .letter-text {
                 font-size: 16px;
             }
+            .music-control {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                top: 15px;
+                right: 15px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Music Control Button -->
+    <button class="music-control" id="musicControl" onclick="toggleMusic()">🎵</button>
+
     <!-- Page 1: Intro -->
     <div id="page1" class="page active">
         <div class="heart-3d">💖</div>
@@ -957,6 +1022,11 @@
         let matchedPairs = 0;
         const totalPairs = 6;
 
+        // Music Variables
+        let audioContext;
+        let isPlaying = false;
+        let musicTimeout;
+
         const cardEmojis = [
             'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=100&h=100&fit=crop&crop=center',
             'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop&crop=center',
@@ -965,6 +1035,84 @@
             'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=100&h=100&fit=crop&crop=center',
             'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=center'
         ];
+
+        // Background Music Functions
+        function createBackgroundMusic() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                const gainNode = audioContext.createGain();
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                
+                playRomanticMelody(gainNode);
+                
+            } catch (e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        function playRomanticMelody(gainNode) {
+            // Romantic melody notes (frequencies in Hz)
+            const melody = [
+                523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50,
+                880.00, 783.99, 698.46, 659.25, 587.33, 523.25
+            ];
+            
+            const noteDuration = 2.5;
+            let currentTime = audioContext.currentTime;
+            
+            function playNote(frequency, startTime, duration) {
+                const oscillator = audioContext.createOscillator();
+                const noteGain = audioContext.createGain();
+                
+                oscillator.connect(noteGain);
+                noteGain.connect(gainNode);
+                
+                oscillator.frequency.setValueAtTime(frequency, startTime);
+                oscillator.type = 'sine';
+                
+                noteGain.gain.setValueAtTime(0, startTime);
+                noteGain.gain.linearRampToValueAtTime(0.3, startTime + 0.5);
+                noteGain.gain.linearRampToValueAtTime(0.3, startTime + duration - 0.5);
+                noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
+                
+                oscillator.start(startTime);
+                oscillator.stop(startTime + duration);
+            }
+            
+            melody.forEach((frequency, index) => {
+                playNote(frequency, currentTime + (index * noteDuration), noteDuration);
+            });
+            
+            musicTimeout = setTimeout(() => {
+                if (isPlaying) {
+                    playRomanticMelody(gainNode);
+                }
+            }, melody.length * noteDuration * 1000);
+        }
+
+        function toggleMusic() {
+            const musicBtn = document.getElementById('musicControl');
+            
+            if (!isPlaying) {
+                isPlaying = true;
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = '🎵';
+                createBackgroundMusic();
+            } else {
+                isPlaying = false;
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '🔇';
+                if (audioContext) {
+                    audioContext.close();
+                    audioContext = null;
+                }
+                if (musicTimeout) {
+                    clearTimeout(musicTimeout);
+                }
+            }
+        }
 
         function goToPage(pageNumber) {
             const currentPageElement = document.querySelector('.page.active');
@@ -1022,9 +1170,17 @@
         }
 
         function updateStoriesPosition() {
-            const wrapper = document.getElementById('storiesWrapper');
-            const translateX = -currentStory * 20; // Each card is 20% width
-            wrapper.style.transform = `translateX(${translateX}%)`;
+            document.querySelectorAll('.story-card').forEach((card, index) => {
+                card.classList.remove('active', 'prev', 'next');
+                
+                if (index === currentStory) {
+                    card.classList.add('active');
+                } else if (index === currentStory - 1) {
+                    card.classList.add('prev');
+                } else if (index === currentStory + 1) {
+                    card.classList.add('next');
+                }
+            });
         }
 
         function goToStory(storyIndex) {
@@ -1051,6 +1207,11 @@
             }
         }
 
+        // Initialize first story as active
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStoriesPosition();
+        });
+
         document.addEventListener('keydown', function(e) {
             if (currentPage === 3) {
                 if (e.key === 'ArrowRight') {
@@ -1060,29 +1221,6 @@
                 }
             }
         });
-
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (currentPage === 3) {
-                if (touchEndX < touchStartX - 50) {
-                    nextStory();
-                }
-                if (touchEndX > touchStartX + 50) {
-                    prevStory();
-                }
-            }
-        }
 
         // Memory Game Functions
         function initMemoryGame() {
@@ -1247,28 +1385,28 @@
             
             // Create gentle sound effect using Web Audio API
             try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
+                const letterAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = letterAudioContext.createOscillator();
+                const gainNode = letterAudioContext.createGain();
                 
                 oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
+                gainNode.connect(letterAudioContext.destination);
                 
-                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.3);
+                oscillator.frequency.setValueAtTime(800, letterAudioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, letterAudioContext.currentTime + 0.3);
                 
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.1);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0, letterAudioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, letterAudioContext.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, letterAudioContext.currentTime + 0.3);
                 
                 oscillator.type = 'sine';
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.3);
+                oscillator.start(letterAudioContext.currentTime);
+                oscillator.stop(letterAudioContext.currentTime + 0.3);
             } catch (e) {
                 // Fallback if Web Audio API is not supported
                 console.log('Audio not supported');
             }
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993fd271d7f1c9da',t:'MTc2MTM3NTQ3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993ffcec3129fe08',t:'MTc2MTM3NzIxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
