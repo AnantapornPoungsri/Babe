@@ -118,10 +118,6 @@
             background: #fff5f9;
         }
 
-
-
-
-
         /* Page 2 - Lock Page */
         #page2 {
             background: linear-gradient(135deg, #fff0f6 0%, #ffe4f0 100%);
@@ -170,6 +166,18 @@
             justify-content: center;
             font-size: 80px;
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .couple-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .password-input {
@@ -741,7 +749,6 @@
                 font-size: 20px;
             }
 
-
             .lock-container {
                 padding: 30px 20px;
                 margin: 0 10px;
@@ -961,31 +968,29 @@
 </head>
 <body>
 
-
     <!-- Page 1: Intro -->
     <div id="page1" class="page active">
         <div class="heart-3d">💖</div>
         <div class="intro-text">Happy Anniversary</div>
         <div class="intro-subtext">2 Months 💞</div>
         
-
-        
         <button class="start-btn" onclick="goToPage(2)">Start</button>
     </div>
 
     <!-- Page 2: Lock Page -->
     <div id="page2" class="page">
-    <div class="lock-container"> <div class="lock-icon">🔒</div>
-        <div class="lock-title">My Lock</div>
-        <div class="lock-subtitle">What's our anniversary date?</div>
-        
-        <div class="couple-photo">
-            <img src="1.jpg" alt="Our Couple Photo">
+        <div class="lock-container">
+            <div class="lock-icon">🔒</div>
+            <div class="lock-title">My Lock</div>
+            <div class="lock-subtitle">What's our anniversary date?</div>
+            <div class="couple-photo">
+                <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
+                <img src="https://your-image-url-here.jpg" alt="Our Photo" onerror="this.style.display='none'; this.parentElement.innerHTML='👫';">
+            </div>
+            <input type="password" class="password-input" id="passwordInput" placeholder="****" maxlength="4">
+            <button class="unlock-btn" onclick="checkPassword()">Unlock 💕</button>
+            <div class="error-message" id="errorMessage">Wrong password 💔</div>
         </div>
-        
-        <input type="password" class="password-input" id="passwordInput" placeholder="****" maxlength="4">
-        <button class="unlock-btn" onclick="checkPassword()">Unlock 💕</button>
-        <div class="error-message" id="errorMessage">Wrong password 💔</div>
     </div>
 
     <!-- Page 3: Memories -->
@@ -1153,7 +1158,7 @@
         let currentPage = 1;
         let currentStory = 0;
         const totalStories = 5;
-        const correctPassword = "2346";
+        const correctPassword = "2908";
 
         // Memory Game Variables
         let firstCard = null;
@@ -1161,8 +1166,6 @@
         let lockBoard = false;
         let matchedPairs = 0;
         const totalPairs = 6;
-
-
 
         const cardEmojis = [
             'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=100&h=100&fit=crop&crop=center',
@@ -1172,10 +1175,6 @@
             'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=100&h=100&fit=crop&crop=center',
             'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=center'
         ];
-
-
-
-
 
         function goToPage(pageNumber) {
             const currentPageElement = document.querySelector('.page.active');
@@ -1471,9 +1470,7 @@
             }
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9940405e0171fe08',t:'MTc2MTM3OTk3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9942a846d7ee45e2',t:'MTc2MTQwNTIwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
-
-
-
+   <img src="https://your-image-url-here.jpg" alt="Our Photo" ...>
+   
