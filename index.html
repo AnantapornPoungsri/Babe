@@ -319,6 +319,18 @@
             justify-content: center;
             font-size: 100px;
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .story-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .story-caption {
@@ -985,7 +997,7 @@
             <div class="lock-subtitle">What's our anniversary date?</div>
             <div class="couple-photo">
                 <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
-                <img src="1.jpg" alt="Our Photo" onerror="this.style.display='none'; this.parentElement.innerHTML='👫';">
+                <img src="https://your-image-url-here.jpg" alt="Our Photo" onerror="this.style.display='none'; this.parentElement.innerHTML='👫';">
             </div>
             <input type="password" class="password-input" id="passwordInput" placeholder="****" maxlength="4">
             <button class="unlock-btn" onclick="checkPassword()">Unlock 💕</button>
@@ -1001,7 +1013,10 @@
         <div class="stories-container">
             <div class="stories-wrapper" id="storiesWrapper">
                 <div class="story-card" id="story0">
-                    <div class="story-photo">☕</div>
+                    <div class="story-photo">
+                        <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
+                        <img src="https://your-first-date-photo-url.jpg" alt="Our first date" onerror="this.style.display='none'; this.parentElement.innerHTML='☕';">
+                    </div>
                     <div class="story-caption">Our first date ☕</div>
                     <div class="story-nav">
                         <button class="nav-btn" onclick="prevStory()" id="prevBtn" disabled>←</button>
@@ -1020,7 +1035,10 @@
                     </div>
                 </div>
                 <div class="story-card" id="story1">
-                    <div class="story-photo">✨</div>
+                    <div class="story-photo">
+                        <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
+                        <img src="https://your-light-festival-photo-url.jpg" alt="Light festival night" onerror="this.style.display='none'; this.parentElement.innerHTML='✨';">
+                    </div>
                     <div class="story-caption">Light festival night ✨</div>
                     <div class="story-nav">
                         <button class="nav-btn" onclick="prevStory()" id="prevBtn1">←</button>
@@ -1039,7 +1057,10 @@
                     </div>
                 </div>
                 <div class="story-card" id="story2">
-                    <div class="story-photo">🎬</div>
+                    <div class="story-photo">
+                        <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
+                        <img src="https://your-movie-night-photo-url.jpg" alt="Movie night together" onerror="this.style.display='none'; this.parentElement.innerHTML='🎬';">
+                    </div>
                     <div class="story-caption">Movie night together 🎬</div>
                     <div class="story-nav">
                         <button class="nav-btn" onclick="prevStory()" id="prevBtn2">←</button>
@@ -1058,7 +1079,10 @@
                     </div>
                 </div>
                 <div class="story-card" id="story3">
-                    <div class="story-photo">🌸</div>
+                    <div class="story-photo">
+                        <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
+                        <img src="https://your-park-day-photo-url.jpg" alt="Beautiful day at the park" onerror="this.style.display='none'; this.parentElement.innerHTML='🌸';">
+                    </div>
                     <div class="story-caption">Beautiful day at the park 🌸</div>
                     <div class="story-nav">
                         <button class="nav-btn" onclick="prevStory()" id="prevBtn3">←</button>
@@ -1077,7 +1101,10 @@
                     </div>
                 </div>
                 <div class="story-card" id="story4">
-                    <div class="story-photo">💕</div>
+                    <div class="story-photo">
+                        <!-- แทนที่ URL ด้านล่างด้วยลิงก์รูปภาพของคุณ -->
+                        <img src="https://your-special-moment-photo-url.jpg" alt="Every moment with you" onerror="this.style.display='none'; this.parentElement.innerHTML='💕';">
+                    </div>
                     <div class="story-caption">Every moment with you 💕</div>
                     <div class="story-nav">
                         <button class="nav-btn" onclick="prevStory()" id="prevBtn4">←</button>
@@ -1470,8 +1497,6 @@
             }
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9942a846d7ee45e2',t:'MTc2MTQwNTIwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9942b5ad0158fd02',t:'MTc2MTQwNTc0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
    <img src="https://your-image-url-here.jpg" alt="Our Photo" ...>
-   
-
