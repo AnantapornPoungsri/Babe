@@ -718,10 +718,17 @@
             box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
         }
 
-        .music-control {
+        .music-controls {
             position: fixed;
             top: 20px;
             right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .music-control {
             background: white;
             color: #ff69b4;
             border: 3px solid #ffc3e1;
@@ -735,7 +742,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
         }
 
         .music-control:hover {
@@ -748,6 +754,59 @@
             background: linear-gradient(135deg, #ff69b4, #ff9ec7);
             color: white;
             border-color: #ff69b4;
+        }
+
+        .music-selector {
+            background: white;
+            border: 3px solid #ffc3e1;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .music-selector.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .music-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .music-option:hover {
+            background: #fff5f9;
+        }
+
+        .music-option.active {
+            background: linear-gradient(135deg, #ff69b4, #ff9ec7);
+            color: white;
+        }
+
+        .music-option-icon {
+            font-size: 20px;
+        }
+
+        .music-option-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ff69b4;
+        }
+
+        .music-option.active .music-option-name {
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -813,19 +872,48 @@
             .letter-text {
                 font-size: 16px;
             }
+            .music-controls {
+                top: 15px;
+                right: 15px;
+            }
+            
             .music-control {
                 width: 50px;
                 height: 50px;
                 font-size: 20px;
-                top: 15px;
-                right: 15px;
+            }
+            
+            .music-selector {
+                min-width: 180px;
+                padding: 12px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Music Control Button -->
-    <button class="music-control" id="musicControl" onclick="toggleMusic()">🎵</button>
+    <!-- Music Controls -->
+    <div class="music-controls">
+        <button class="music-control" id="musicControl" onclick="toggleMusic()">🎵</button>
+        <button class="music-control" id="musicSelector" onclick="toggleMusicSelector()" style="font-size: 18px;">🎼</button>
+        <div class="music-selector" id="musicSelectorPanel">
+            <div class="music-option active" onclick="selectMusic('romantic')" data-music="romantic">
+                <div class="music-option-icon">💕</div>
+                <div class="music-option-name">Romantic</div>
+            </div>
+            <div class="music-option" onclick="selectMusic('dreamy')" data-music="dreamy">
+                <div class="music-option-icon">✨</div>
+                <div class="music-option-name">Dreamy</div>
+            </div>
+            <div class="music-option" onclick="selectMusic('gentle')" data-music="gentle">
+                <div class="music-option-icon">🌸</div>
+                <div class="music-option-name">Gentle</div>
+            </div>
+            <div class="music-option" onclick="selectMusic('sweet')" data-music="sweet">
+                <div class="music-option-icon">🍯</div>
+                <div class="music-option-name">Sweet</div>
+            </div>
+        </div>
+    </div>
 
     <!-- Page 1: Intro -->
     <div id="page1" class="page active">
@@ -1026,6 +1114,31 @@
         let audioContext;
         let isPlaying = false;
         let musicTimeout;
+        let currentMusicStyle = 'romantic';
+
+        // Different music styles
+        const musicStyles = {
+            romantic: {
+                melody: [523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50, 880.00, 783.99, 698.46, 659.25, 587.33, 523.25],
+                tempo: 2.5,
+                waveType: 'sine'
+            },
+            dreamy: {
+                melody: [440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 698.46, 659.25, 587.33, 523.25, 493.88, 440.00],
+                tempo: 3.0,
+                waveType: 'triangle'
+            },
+            gentle: {
+                melody: [349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 523.25, 493.88, 440.00, 392.00, 349.23],
+                tempo: 3.5,
+                waveType: 'sine'
+            },
+            sweet: {
+                melody: [659.25, 698.46, 783.99, 880.00, 987.77, 880.00, 783.99, 698.46, 659.25, 587.33, 523.25, 587.33, 659.25],
+                tempo: 2.0,
+                waveType: 'square'
+            }
+        };
 
         const cardEmojis = [
             'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=100&h=100&fit=crop&crop=center',
@@ -1045,21 +1158,19 @@
                 gainNode.connect(audioContext.destination);
                 gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
                 
-                playRomanticMelody(gainNode);
+                playMelody(gainNode);
                 
             } catch (e) {
                 console.log('Audio not supported');
             }
         }
 
-        function playRomanticMelody(gainNode) {
-            // Romantic melody notes (frequencies in Hz)
-            const melody = [
-                523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50,
-                880.00, 783.99, 698.46, 659.25, 587.33, 523.25
-            ];
+        function playMelody(gainNode) {
+            const style = musicStyles[currentMusicStyle];
+            const melody = style.melody;
+            const noteDuration = style.tempo;
+            const waveType = style.waveType;
             
-            const noteDuration = 2.5;
             let currentTime = audioContext.currentTime;
             
             function playNote(frequency, startTime, duration) {
@@ -1070,7 +1181,7 @@
                 noteGain.connect(gainNode);
                 
                 oscillator.frequency.setValueAtTime(frequency, startTime);
-                oscillator.type = 'sine';
+                oscillator.type = waveType;
                 
                 noteGain.gain.setValueAtTime(0, startTime);
                 noteGain.gain.linearRampToValueAtTime(0.3, startTime + 0.5);
@@ -1087,7 +1198,7 @@
             
             musicTimeout = setTimeout(() => {
                 if (isPlaying) {
-                    playRomanticMelody(gainNode);
+                    playMelody(gainNode);
                 }
             }, melody.length * noteDuration * 1000);
         }
@@ -1113,6 +1224,45 @@
                 }
             }
         }
+
+        function toggleMusicSelector() {
+            const selector = document.getElementById('musicSelectorPanel');
+            selector.classList.toggle('show');
+        }
+
+        function selectMusic(style) {
+            currentMusicStyle = style;
+            
+            // Update active option
+            document.querySelectorAll('.music-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`[data-music="${style}"]`).classList.add('active');
+            
+            // Hide selector
+            document.getElementById('musicSelectorPanel').classList.remove('show');
+            
+            // Restart music with new style if playing
+            if (isPlaying) {
+                if (audioContext) {
+                    audioContext.close();
+                }
+                if (musicTimeout) {
+                    clearTimeout(musicTimeout);
+                }
+                createBackgroundMusic();
+            }
+        }
+
+        // Close music selector when clicking outside
+        document.addEventListener('click', function(e) {
+            const selector = document.getElementById('musicSelectorPanel');
+            const selectorBtn = document.getElementById('musicSelector');
+            
+            if (!selector.contains(e.target) && e.target !== selectorBtn) {
+                selector.classList.remove('show');
+            }
+        });
 
         function goToPage(pageNumber) {
             const currentPageElement = document.querySelector('.page.active');
@@ -1408,5 +1558,5 @@
             }
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993ffcec3129fe08',t:'MTc2MTM3NzIxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'994009e014d63fd0',t:'MTc2MTM3Nzc0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
