@@ -95,7 +95,7 @@
             color: #fff;
             font-size: 32px;
             font-weight: 600;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         .start-btn {
@@ -116,6 +116,86 @@
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(255, 105, 180, 0.6);
             background: #fff5f9;
+        }
+
+        /* Restart Button */
+        .restart-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .restart-btn {
+            background: white;
+            color: #ff69b4;
+            border: 3px solid #ffc3e1;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+            border-color: #ff69b4;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .countdown-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 5px rgba(255, 105, 180, 0.5);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .countdown-number {
+            background: white;
+            color: #ff69b4;
+            font-size: 32px;
+            font-weight: 700;
+            padding: 15px 10px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            margin-bottom: 8px;
+            min-width: 60px;
+        }
+
+        .countdown-label {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(255, 105, 180, 0.5);
         }
 
         /* Page 2 - Lock Page */
@@ -718,97 +798,6 @@
             box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
         }
 
-        .music-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 1000;
-        }
-
-        .music-control {
-            background: white;
-            color: #ff69b4;
-            border: 3px solid #ffc3e1;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .music-control:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
-            border-color: #ff69b4;
-        }
-
-        .music-control.playing {
-            background: linear-gradient(135deg, #ff69b4, #ff9ec7);
-            color: white;
-            border-color: #ff69b4;
-        }
-
-        .music-selector {
-            background: white;
-            border: 3px solid #ffc3e1;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            min-width: 200px;
-        }
-
-        .music-selector.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .music-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 5px;
-        }
-
-        .music-option:hover {
-            background: #fff5f9;
-        }
-
-        .music-option.active {
-            background: linear-gradient(135deg, #ff69b4, #ff9ec7);
-            color: white;
-        }
-
-        .music-option-icon {
-            font-size: 20px;
-        }
-
-        .music-option-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #ff69b4;
-        }
-
-        .music-option.active .music-option-name {
-            color: white;
-        }
-
         /* Mobile Phones */
         @media (max-width: 480px) {
             .intro-text {
@@ -817,7 +806,7 @@
             }
             .intro-subtext {
                 font-size: 20px;
-                margin-bottom: 40px;
+                margin-bottom: 20px;
             }
             .heart-3d {
                 font-size: 70px;
@@ -826,6 +815,35 @@
             .start-btn {
                 padding: 15px 40px;
                 font-size: 20px;
+            }
+            .restart-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                top: 10px;
+                left: 10px;
+            }
+            .countdown-container {
+                padding: 20px 15px;
+                margin: 20px 10px;
+            }
+            .countdown-title {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            .countdown-timer {
+                gap: 10px;
+            }
+            .countdown-item {
+                min-width: 60px;
+            }
+            .countdown-number {
+                font-size: 24px;
+                padding: 10px 8px;
+                min-width: 50px;
+            }
+            .countdown-label {
+                font-size: 12px;
             }
             .lock-container {
                 padding: 30px 20px;
@@ -932,27 +950,6 @@
             .letter-signature {
                 font-size: 16px;
             }
-            .music-controls {
-                top: 10px;
-                right: 10px;
-                gap: 8px;
-            }
-            .music-control {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-            .music-selector {
-                min-width: 160px;
-                padding: 10px;
-                right: 0;
-            }
-            .music-option {
-                padding: 8px;
-            }
-            .music-option-name {
-                font-size: 12px;
-            }
         }
 
         /* Tablets */
@@ -968,6 +965,20 @@
             }
             .lock-title {
                 font-size: 28px;
+            }
+            .countdown-container {
+                padding: 25px 20px;
+                margin: 25px 15px;
+            }
+            .countdown-title {
+                font-size: 18px;
+            }
+            .countdown-number {
+                font-size: 28px;
+                padding: 12px 10px;
+            }
+            .countdown-label {
+                font-size: 13px;
             }
             .memories-title, .game-title, .letter-title {
                 font-size: 32px;
@@ -1033,19 +1044,6 @@
             .letter-signature {
                 font-size: 19px;
             }
-            .music-controls {
-                top: 20px;
-                right: 20px;
-            }
-            .music-control {
-                width: 55px;
-                height: 55px;
-                font-size: 22px;
-            }
-            .music-selector {
-                min-width: 200px;
-                padding: 15px;
-            }
         }
 
         /* Large Tablets and Small Desktops */
@@ -1061,7 +1059,7 @@
 
         /* Touch-friendly improvements */
         @media (hover: none) and (pointer: coarse) {
-            .start-btn, .unlock-btn, .nav-btn, .mini-game-icon, .back-btn, .popup-btn, .music-control {
+            .start-btn, .unlock-btn, .nav-btn, .mini-game-icon, .back-btn, .popup-btn, .restart-btn {
                 min-height: 44px;
                 min-width: 44px;
             }
@@ -1074,36 +1072,13 @@
                 min-width: 20px;
                 min-height: 20px;
             }
-            
-            .music-option {
-                min-height: 44px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Music Controls -->
-    <div class="music-controls">
-        <button class="music-control" id="musicControl" onclick="toggleMusic()">🎵</button>
-        <button class="music-control" id="musicSelector" onclick="toggleMusicSelector()" style="font-size: 18px;">🎼</button>
-        <div class="music-selector" id="musicSelectorPanel">
-            <div class="music-option active" onclick="selectMusic('romantic')" data-music="romantic">
-                <div class="music-option-icon">💕</div>
-                <div class="music-option-name">Romantic</div>
-            </div>
-            <div class="music-option" onclick="selectMusic('dreamy')" data-music="dreamy">
-                <div class="music-option-icon">✨</div>
-                <div class="music-option-name">Dreamy</div>
-            </div>
-            <div class="music-option" onclick="selectMusic('gentle')" data-music="gentle">
-                <div class="music-option-icon">🌸</div>
-                <div class="music-option-name">Gentle</div>
-            </div>
-            <div class="music-option" onclick="selectMusic('sweet')" data-music="sweet">
-                <div class="music-option-icon">🍯</div>
-                <div class="music-option-name">Sweet</div>
-            </div>
-        </div>
+    <!-- Restart Button -->
+    <div class="restart-controls">
+        <button class="restart-btn" id="restartBtn" onclick="restartWebsite()" style="display: none;">🔄</button>
     </div>
 
     <!-- Page 1: Intro -->
@@ -1111,6 +1086,26 @@
         <div class="heart-3d">💖</div>
         <div class="intro-text">Happy Anniversary</div>
         <div class="intro-subtext">2 Months 💞</div>
+        
+        <!-- Countdown Timer -->
+        <div class="countdown-container">
+            <div class="countdown-title">Anniversary Countdown:</div>
+            <div class="countdown-timer" id="countdownTimer">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+            </div>
+        </div>
+        
         <button class="start-btn" onclick="goToPage(2)">Start</button>
     </div>
 
@@ -1292,7 +1287,7 @@
         let currentPage = 1;
         let currentStory = 0;
         const totalStories = 5;
-        const correctPassword = "2908";
+        const correctPassword = "2346";
 
         // Memory Game Variables
         let firstCard = null;
@@ -1301,35 +1296,9 @@
         let matchedPairs = 0;
         const totalPairs = 6;
 
-        // Music Variables
-        let audioContext;
-        let isPlaying = false;
-        let musicTimeout;
-        let currentMusicStyle = 'romantic';
-
-        // Different music styles
-        const musicStyles = {
-            romantic: {
-                melody: [523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50, 880.00, 783.99, 698.46, 659.25, 587.33, 523.25],
-                tempo: 2.5,
-                waveType: 'sine'
-            },
-            dreamy: {
-                melody: [440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 698.46, 659.25, 587.33, 523.25, 493.88, 440.00],
-                tempo: 3.0,
-                waveType: 'triangle'
-            },
-            gentle: {
-                melody: [349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 523.25, 493.88, 440.00, 392.00, 349.23],
-                tempo: 3.5,
-                waveType: 'sine'
-            },
-            sweet: {
-                melody: [659.25, 698.46, 783.99, 880.00, 987.77, 880.00, 783.99, 698.46, 659.25, 587.33, 523.25, 587.33, 659.25],
-                tempo: 2.0,
-                waveType: 'square'
-            }
-        };
+        // Countdown Timer Variables
+        let countdownInterval;
+        const anniversaryDate = new Date('2025-10-29'); // Anniversary date
 
         const cardEmojis = [
             'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=100&h=100&fit=crop&crop=center',
@@ -1340,124 +1309,85 @@
             'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=center'
         ];
 
-        // Background Music Functions
-        function createBackgroundMusic() {
-            try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                const gainNode = audioContext.createGain();
-                gainNode.connect(audioContext.destination);
-                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-                
-                playMelody(gainNode);
-                
-            } catch (e) {
-                console.log('Audio not supported');
-            }
-        }
+        // Countdown Timer Functions
+        function updateCountdown() {
+            // Set current time to October 25, 2025 at 15:05 (3:05 PM)
+            const now = new Date('2025-10-25T15:05:00').getTime();
+            const distance = anniversaryDate.getTime() - now;
 
-        function playMelody(gainNode) {
-            const style = musicStyles[currentMusicStyle];
-            const melody = style.melody;
-            const noteDuration = style.tempo;
-            const waveType = style.waveType;
-            
-            let currentTime = audioContext.currentTime;
-            
-            function playNote(frequency, startTime, duration) {
-                const oscillator = audioContext.createOscillator();
-                const noteGain = audioContext.createGain();
-                
-                oscillator.connect(noteGain);
-                noteGain.connect(gainNode);
-                
-                oscillator.frequency.setValueAtTime(frequency, startTime);
-                oscillator.type = waveType;
-                
-                noteGain.gain.setValueAtTime(0, startTime);
-                noteGain.gain.linearRampToValueAtTime(0.3, startTime + 0.5);
-                noteGain.gain.linearRampToValueAtTime(0.3, startTime + duration - 0.5);
-                noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
-                
-                oscillator.start(startTime);
-                oscillator.stop(startTime + duration);
-            }
-            
-            melody.forEach((frequency, index) => {
-                playNote(frequency, currentTime + (index * noteDuration), noteDuration);
-            });
-            
-            musicTimeout = setTimeout(() => {
-                if (isPlaying) {
-                    playMelody(gainNode);
-                }
-            }, melody.length * noteDuration * 1000);
-        }
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-        function toggleMusic() {
-            const musicBtn = document.getElementById('musicControl');
-            
-            if (!isPlaying) {
-                isPlaying = true;
-                musicBtn.classList.add('playing');
-                musicBtn.innerHTML = '🎵';
-                createBackgroundMusic();
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             } else {
-                isPlaying = false;
-                musicBtn.classList.remove('playing');
-                musicBtn.innerHTML = '🔇';
-                if (audioContext) {
-                    audioContext.close();
-                    audioContext = null;
-                }
-                if (musicTimeout) {
-                    clearTimeout(musicTimeout);
-                }
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
             }
         }
 
-        function toggleMusicSelector() {
-            const selector = document.getElementById('musicSelectorPanel');
-            selector.classList.toggle('show');
+        // Start countdown timer
+        function startCountdown() {
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
         }
 
-        function selectMusic(style) {
-            currentMusicStyle = style;
+        // Restart Website Function
+        function restartWebsite() {
+            // Clear any intervals
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
             
-            // Update active option
-            document.querySelectorAll('.music-option').forEach(option => {
-                option.classList.remove('active');
+            // Reset all variables
+            currentPage = 1;
+            currentStory = 0;
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+            matchedPairs = 0;
+            
+            // Reset all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active', 'fade-out');
             });
-            document.querySelector(`[data-music="${style}"]`).classList.add('active');
             
-            // Hide selector
-            document.getElementById('musicSelectorPanel').classList.remove('show');
+            // Show first page
+            document.getElementById('page1').classList.add('active');
             
-            // Restart music with new style if playing
-            if (isPlaying) {
-                if (audioContext) {
-                    audioContext.close();
-                }
-                if (musicTimeout) {
-                    clearTimeout(musicTimeout);
-                }
-                createBackgroundMusic();
-            }
+            // Reset password input
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').classList.remove('show');
+            
+            // Reset envelope
+            document.getElementById('envelope').classList.remove('opened');
+            
+            // Reset popup
+            document.getElementById('popupOverlay').classList.remove('show');
+            
+            // Reset stories
+            updateStoriesPosition();
+            updateStoryDots();
+            
+            // Hide restart button
+            document.getElementById('restartBtn').style.display = 'none';
+            
+            // Restart countdown
+            startCountdown();
         }
-
-        // Close music selector when clicking outside
-        document.addEventListener('click', function(e) {
-            const selector = document.getElementById('musicSelectorPanel');
-            const selectorBtn = document.getElementById('musicSelector');
-            
-            if (!selector.contains(e.target) && e.target !== selectorBtn) {
-                selector.classList.remove('show');
-            }
-        });
 
         function goToPage(pageNumber) {
             const currentPageElement = document.querySelector('.page.active');
             const nextPageElement = document.getElementById('page' + pageNumber);
+            
+            // Show restart button when leaving first page
+            if (currentPage === 1 && pageNumber !== 1) {
+                document.getElementById('restartBtn').style.display = 'flex';
+            }
             
             // Add fade-out class to current page
             if (currentPageElement) {
@@ -1551,6 +1481,7 @@
         // Initialize first story as active
         document.addEventListener('DOMContentLoaded', function() {
             updateStoriesPosition();
+            startCountdown();
         });
 
         document.addEventListener('keydown', function(e) {
@@ -1749,5 +1680,5 @@
             }
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'994016c476fafe08',t:'MTc2MTM3ODI2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'994035e887e0fe08',t:'MTc2MTM3OTU0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
